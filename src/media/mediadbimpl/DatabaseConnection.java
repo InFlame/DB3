@@ -96,14 +96,14 @@ public class DatabaseConnection {
 		System.out.println("DRIVER::\t" + dbmd.getDriverName() + " "
 				+ dbmd.getDriverVersion());
 		System.out.println("SQLTYPE::\t" + dbmd.getTypeInfo());
-		System.out.println("KEYWORDS::\t" + dbmd.getSQLKeywords());
-		System.out.println("SYSFUNC::\t" + dbmd.getSystemFunctions());
+		//System.out.println("KEYWORDS::\t" + dbmd.getSQLKeywords());
+		//System.out.println("SYSFUNC::\t" + dbmd.getSystemFunctions());
 		System.out.println("\nCompatibility - Parameters:");
 		System.out.println("Core SQL:\t\t" + dbmd.supportsMinimumSQLGrammar());
-		System.out.println("Ext. SQL:\t\t" + dbmd.supportsExtendedSQLGrammar());
-		System.out.println("Full Outerjoin:\t\t" + dbmd.supportsFullOuterJoins());
+		//System.out.println("Ext. SQL:\t\t" + dbmd.supportsExtendedSQLGrammar());
+		//System.out.println("Full Outerjoin:\t\t" + dbmd.supportsFullOuterJoins());
 		System.out.println("Batch-Updates:\t\t" + dbmd.supportsBatchUpdates());
-		System.out.println("All tables selectable:\t" + dbmd.allTablesAreSelectable());
+		//System.out.println("All tables selectable:\t" + dbmd.allTablesAreSelectable());
 		this.databasename = dbmd.getDatabaseProductName() + " " +
 				dbmd.getDatabaseProductVersion();
 
