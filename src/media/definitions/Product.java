@@ -7,25 +7,57 @@ package media.definitions;
 import java.util.Set;
 import java.util.LinkedHashSet;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Table;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;  
+import javax.persistence.OneToMany; 
+import javax.persistence.CascadeType;
+
+import javax.persistence.JoinTable;
 /**
  * @author Silvio Paschke, Stefan Endrullis
  */
+@Embeddable
+@Table(name="Produkte")
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Product {
-
+	
 	public enum Type { book, dvd, music }
 
 	private Integer number;
+    @Column(name = "ASIN")
 	private String asin;
+	
 	private boolean stateNew = true;
+	@Column(name = "Rating")
 	private Float avgRating = null;
+    @Column(name = "Verkaufsrang")
 	private Integer salesRank = null;
+    @Column(name = "Titel")
 	private String title = "";
-	private Float price = null;
+    
+    private Float price = null;
+	
 	private String currency = "";
+	
 	private boolean available = false;
+    @Column(name = "PicUrl")    
 	private String picUrl = "";
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="teilVon",
+                joinColumns={@JoinColumn(name="ASIN")},
+                inverseJoinColumns={@JoinColumn(name="Namen")})
 	private Set<Category> categories = new LinkedHashSet<Category>(); //leafs of categoryTree
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="ASIN")
 	private Set<Review> reviews = new LinkedHashSet<Review>();
+	@Enumerated(EnumType.STRING)  
+	@Column(name = "TYP")
 	private Type type;
 
 	/**

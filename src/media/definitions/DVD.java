@@ -9,16 +9,50 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.LinkedHashSet;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import org.hibernate.annotations.Where;
 /**
  * @author Silvio Paschke, Stefan Endrullis
  */
+@Entity
+@Table(name = "DVD")
 public class DVD extends Product {
-
+	@Column(name="Format")
 	private String format = "";
+	@Column(name="RegionCode")
 	private Integer regionCode = null;
+	@Column(name="Laufzeit")
 	private Integer runningTime = null;
+	@OneToMany
+    @JoinTable(
+            name="TEAM",
+            joinColumns = @JoinColumn( name="ASIN"),
+            inverseJoinColumns = @JoinColumn( name="ASIN")
+    )
+	@Where(clause="Position ='actor'") 
 	private Set<Actor> actors = new LinkedHashSet<Actor>();
+
+	@OneToMany
+    @JoinTable(
+            name="TEAM",
+            joinColumns = @JoinColumn( name="ASIN"),
+            inverseJoinColumns = @JoinColumn( name="ASIN")
+    )
+	@Where(clause="Position ='creators'") 
 	private Set<Creator> creators = new LinkedHashSet<Creator>();
+
+	@OneToMany
+    @JoinTable(
+            name="TEAM",
+            joinColumns = @JoinColumn( name="ASIN"),
+            inverseJoinColumns = @JoinColumn( name="ASIN")
+    )
+	@Where(clause= "Position ='directors'") 
 	private Set<Director> directors = new LinkedHashSet<Director>();
 
 	public DVD() {

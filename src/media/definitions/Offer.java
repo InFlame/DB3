@@ -1,13 +1,26 @@
 package media.definitions;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * @author Stefan Endrullis
  */
+
+@Entity
+@Table(name = "ANGEBOT")
 public class Offer {
+	
+	@Column(name="ASIN")	
 	private Integer id;
 	private Product product;
+	@Column(name="Preis")
 	private double price;
+	@Column(name="Verfuegbarkeit")
 	private String currency;
+	@Column(name="FNAME")
 	private String location;
 
 	public Offer() {
@@ -27,7 +40,6 @@ public class Offer {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public Product getProduct() {
 		return product;
 	}

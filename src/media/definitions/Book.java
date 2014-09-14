@@ -5,17 +5,44 @@ package media.definitions;
 
 import java.util.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /**
  * @author Silvio Paschke, Stefan Endrullis
  */
+
+@Entity
+@Table(name = "Buch")
 public class Book extends Product {
 
+	@Column(name="ISBN")
 	private String isbn = "";
+	
+	@Column(name="Seitenzahl")
 	private Integer pages = null;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="PubDate")
 	private Date pubDate = null;
 
+	@Column(name="Publisher")
 	//private     List  tracks      = null;
 	private Set<Publisher> publishers = new LinkedHashSet<Publisher>();
+	
+	   
+    @OneToMany
+    @JoinTable(
+            name="hatAutor",
+            joinColumns = @JoinColumn( name="ASIN"),
+            inverseJoinColumns = @JoinColumn( name="ASIN")
+    )
 	private Set<Author> authors = new LinkedHashSet<Author>();
 
 	public Book() {

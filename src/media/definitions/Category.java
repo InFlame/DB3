@@ -9,15 +9,27 @@ package media.definitions;
 
 import java.util.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+import javax.persistence.Table;
 
 /**
  * @author Silvio Paschke, Stefan Endrullis
  */
+@Entity
+@Table(name = "Kategorie")
 public class Category {
 
 	private Integer id;
+
+	@Column(name="Namen")
 	private String name;
+	
+	
 	private Set<Category> children = new LinkedHashSet<Category>();
+
+	@Column(name="Parent")
 	private Category parent = null;
 
 	/**

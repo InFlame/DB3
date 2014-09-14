@@ -6,6 +6,7 @@ package media.definitions;
  * @author Stefan Endrullis
  */
 public class Person<P extends Product> {
+	
 	protected P product;
 	protected String name;
 	protected String role;

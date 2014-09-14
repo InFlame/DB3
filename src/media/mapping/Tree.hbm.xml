@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+  <class name="media.mapping.TreeNode" table="node">
+    <id name="id" type="long" column="id">
+      <generator class="native"/>
+    </id>
+    <property name="name"/>
+    <list name="children" inverse="true">
+      <key column="parent_id"/>
+      <index column="index_col"/>
+      <one-to-many class="media.mapping.TreeNode"/>
+    </list>
+    <many-to-one name="parent" column="parent_id" class="media.mapping.TreeNode"/>
+    <property name="index" column="index_col" type="int" update="true" insert="true"/>
+  </class>
+
+</hibernate-mapping>
