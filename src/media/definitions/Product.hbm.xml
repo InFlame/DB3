@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="media.definitions">
+ <class name="Product" table="Produkte">
+  <id column="ASIN" name="ASIN" type="string">
+   <generator class="native"/>
+  </id>
+  <property column="Verkaufsrang" generated="never" lazy="false" name="number"/>
+  <!--  number wohl nicht richtig da wir dies nicht haben 
+  stateNew fehlt in der DB 
+  avgRating fehlt in der DB -->
+  <property column="Verkaufsrang" generated="never" lazy="false" name="salesRank"/>
+  <property column="Titel" generated="never" lazy="false" name="title"/>
+  <!--  Price ist nicht eindeutig würde nur den ersten Preis nehmen
+  currency fehlt in der DB 
+  available ist kein boolean mapping fehler -->
+  <property column="PicUrl" generated="never" lazy="false" name="picUrl"/>
+  <set cascade="all" fetch="select" lazy="true" name="categories"
+   sort="unsorted" table="teilVon">
+   <key column="ASIN" foreign-key="Parent"/>
+   <one-to-many class="Category"/>
+  </set>
+  <set fetch="select" inverse="true" lazy="true" name="reviews"
+   sort="unsorted" table="Review">
+   <key>
+    <column name="ASIN" not-null="true"/>
+   </key>
+   <one-to-many class="Review"/>
+  </set>
+  <property column="TYP" generated="never" lazy="false" name="type" type="org.hibernate.type.EnumType"/>
+  <joined-subclass name="media.definitions.Book" table="Buch">
+   <key column="ASIN"/>
+   <property column="ISBN" generated="never" lazy="false" name="isbn"/>
+   <property column="Seitenzahl" generated="never" lazy="false" name="pages"/>
+   <property column="PubDate" generated="never" lazy="false"
+    name="pubDate" type="date"/>
+  
+   <!--  wir haben nur einen Publisher -->
+  
+    <set fetch="select" inverse="true" lazy="true" name="publishers"
+   sort="unsorted" table="Buch">
+   <key>
+    <column name="Publisher" not-null="true"/>
+   </key>
+   <one-to-many class="Product"/>
+  </set>
+   
+   
+   <set cascade="all" fetch="select" lazy="true" name="authors"
+    sort="unsorted" table="hatAutor">
+    <key column="ASIN"/>
+    <many-to-many class="Person" column="Namen" unique="false"/>
+   </set>
+  </joined-subclass>
+  <joined-subclass extends="Product" name="DVD">
+   <key column="ASIN"/>
+   <property column="Format" generated="never" lazy="false"
+    name="format" type="string"/>
+   <property column="RegionCode" generated="never" lazy="false"
+    name="regionCode" type="java.lang.Integer"/>
+   <property column="Laufzeit" generated="never" lazy="false"
+    name="runningTime" type="java.lang.Integer"/>
+   <set cascade="all" fetch="select" lazy="true" name="actors"
+    sort="unsorted" table="TEAM">
+    <key column="ASIN"/>
+    <!--  Prüfen ob das so geht -->
+    <many-to-many class="DVD" column="Position" unique="false" where="Position=&quot;actors&quot;"/>
+   </set>
+  </joined-subclass>
+ </class>
+</hibernate-mapping>

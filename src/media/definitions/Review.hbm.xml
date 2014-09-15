@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class table="Review" name="media.definitions.Review">
+	 <composite-id>
+	  <key-property name="username" type="string" column="User"/> 
+	 </composite-id>
+	
+	 <many-to-one name="product" class="media.definitions.Product" fetch="select">
+            <column name="ASIN" not-null="true" />
+     </many-to-one>
+	 <property name="rating" column="Bewertung" />
+     <property name="helpful_vo" column="Helpful" />
+     <property name="date" column="Datum" />
+     <property name="content" column="Summary" />
+           
+     
+ 
+          
+</class>
+</hibernate-mapping>
