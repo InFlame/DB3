@@ -8,19 +8,12 @@ import javax.persistence.Table;
 /**
  * @author Stefan Endrullis
  */
-
-@Entity
-@Table(name = "ANGEBOT")
 public class Offer {
 	
-	@Column(name="ASIN")	
 	private Integer id;
 	private Product product;
-	@Column(name="Preis")
 	private double price;
-	@Column(name="Verfuegbarkeit")
 	private String currency;
-	@Column(name="FNAME")
 	private String location;
 
 	public Offer() {

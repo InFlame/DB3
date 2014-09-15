@@ -18,31 +18,10 @@ import org.hibernate.annotations.Where;
 /**
  * @author Silvio Paschke, Stefan Endrullis
  */
-
-@Entity
-@Table(name = "CD")
 public class Music extends Product {
-	@Column(name="ReleaseDate")
 	private Date releaseDate = null;
-	
-
-	@OneToMany
-    @JoinTable(
-            name="LIED",
-            joinColumns = @JoinColumn( name="ASIN"),
-            inverseJoinColumns = @JoinColumn( name="ASIN")
-    ) 
 	private List<Track> tracks = new ArrayList<Track>();
-	
-	@Column(name="Label")
 	private Set<Label> labels = new LinkedHashSet<Label>();
-
-	@OneToMany
-    @JoinTable(
-            name="HATINTERPRET",
-            joinColumns = @JoinColumn( name="ASIN"),
-            inverseJoinColumns = @JoinColumn( name="ASIN")
-    ) 
 	private Set<Artist> artists = new LinkedHashSet<Artist>();
 
 	public Music() {

@@ -3,32 +3,21 @@
  */
 package media.definitions;
 
+import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  * @author Silvio Paschke, Stefan Endrullis
  */
-public class Review {
+public class Review implements Serializable {
 
 	private Integer id;
-	@ManyToOne
-	@JoinColumn(name="ASIN")
 	private Product product;
-	@Column(name="User")
 	private String username = "";
-	@Column(name="Bewertung")
 	private Integer rating = null;
-	@Column(name="Helpful")
 	private Integer helpful_vo = null;
-	@Column(name="Date")
 	private Date date = null;
-	@Column(name="Summary")
 	private String summary = "";
-	
 	private String content = "";
 
 
