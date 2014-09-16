@@ -1,14 +1,11 @@
 package media.definitions;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @author Stefan Endrullis
  */
-public class Offer {
+public class Offer implements Serializable{
 	
 	private Integer id;
 	private Product product;

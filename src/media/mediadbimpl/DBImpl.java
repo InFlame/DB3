@@ -48,8 +48,8 @@ public class DBImpl implements MediaDbInterface {
 		try {
 			this.dbCon = new DatabaseConnection();
 			this.dbCon.connect("con", prop);
-			
-			sessionFactory = (new Configuration()).configure().buildSessionFactory();
+
+			sessionFactory = new Configuration().configure().buildSessionFactory();
 			System.out.println("Connection established!");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

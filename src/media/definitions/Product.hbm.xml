@@ -3,7 +3,7 @@
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="media.definitions">
 	<class name="Product" table="Produkte">
-		<id column="ASIN" name="ASIN" type="string">
+		<id column="ASIN" name="asin" type="string">
 			<generator class="native" />
 		</id>
 		<property column="Verkaufsrang" generated="never" lazy="false"
@@ -11,7 +11,7 @@
 		<!-- number wohl nicht richtig da wir dies nicht haben stateNew fehlt in 
 			der DB avgRating fehlt in der DB -->
 		<property column="Verkaufsrang" generated="never" lazy="false"
-			name="salesRank" />
+			name="salesRank" insert="false" update="false"/>
 		<property column="Titel" generated="never" lazy="false" name="title" />
 		<!-- Price ist nicht eindeutig würde nur den ersten Preis nehmen currency 
 			fehlt in der DB available ist kein boolean mapping fehler -->
@@ -29,8 +29,14 @@
 			</key>
 			<one-to-many class="Review" />
 		</set>
-		<property column="TYP" generated="never" lazy="false" name="type"
-			type="org.hibernate.type.EnumType" />
+		<!-- <property column="TYP" generated="never" lazy="false" name="type"
+			type="org.hibernate.type.EnumType" /> -->
+		<property column="TYP" name="type">
+		    <type name="org.hibernate.type.EnumType">
+		        <param name="enumClass">media.definitions.Product$Type</param>
+		    </type>
+		</property>
+
 		<joined-subclass name="media.definitions.Book" table="Buch">
 			<key column="ASIN" />
 			<property column="ISBN" generated="never" lazy="false" name="isbn" />
