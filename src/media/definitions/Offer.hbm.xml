@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="media.definitions">
+    <class table="Angebot" name="Offer">
+        <composite-id>
+            <key-property name="id" type="String" column="ASIN"/>
+            <key-property name="location" type="String" column="FName"/>
+        </composite-id>
+        <property name="price" column="Preis" />
+    </class>
+</hibernate-mapping>
