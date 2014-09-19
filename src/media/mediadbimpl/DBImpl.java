@@ -15,6 +15,7 @@ import media.definitions.DVD;
 import media.definitions.MediaDbInterface;
 import media.definitions.Music;
 import media.definitions.Offer;
+import media.definitions.Person;
 import media.definitions.Product;
 import media.definitions.Review;
 import media.definitions.SQLResult;
@@ -67,7 +68,7 @@ public class DBImpl implements MediaDbInterface {
 	public List<Product> getProducts(String namePattern) {
 		Session session = null;
 		Transaction trx = null;
-		List results = null;
+		List results = new ArrayList<Product>();
 
 		try {
 			session = sessionFactory.openSession();
@@ -75,16 +76,23 @@ public class DBImpl implements MediaDbInterface {
 			Criteria cr = session.createCriteria(Product.class);
 			cr.add(Restrictions.like("title", namePattern));
 			System.out.println("here!");
-			results = cr.list();
+			results.addAll(cr.list());
 			System.out.println("----------------------------");
 			
 			System.out.println("QUERY FOR PRODUCTS LIKE : " + namePattern);
 			System.out.println("RESULTS: ");
 			
-			Iterator it = results.iterator();
-			while(it.hasNext()) {
+			//Iterator it = results.iterator();
+			/*while(it.hasNext()) {
+				System.out.println("bla");
 				System.out.println(it.next());
-			}
+			}*/
+			
+			// TEST
+			/*Person pers = new Person();
+			pers.setName("TESTTEST");
+			System.out.println("new object created");
+			session.save(pers);*/
 			
 			trx.commit();
 		} catch(HibernateException e) {
@@ -155,6 +163,7 @@ public class DBImpl implements MediaDbInterface {
 			List<Map <String, Object>> aliasToValueMap = hqlQuery.list();
 
 			Iterator it = aliasToValueMap.iterator();*/
+
 			Iterator it = hqlQuery.list().iterator();
 			while(it.hasNext()) {
 				System.out.println(it.next());
