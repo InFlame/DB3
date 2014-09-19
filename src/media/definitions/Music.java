@@ -6,15 +6,6 @@ package media.definitions;
 import java.util.*;
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Where;
-
 /**
  * @author Silvio Paschke, Stefan Endrullis
  */
