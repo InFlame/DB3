@@ -1,11 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="media.definitions">
-<class table="Kategorie" name="Category">
-	<composite-id>
-		<key-property name="name" type="string" column="Namen"/>
-		<key-property name="parent" type="string" column="Parent"/>
-	</composite-id>
-</class>
+ <class name="Category" table="Kategorie">
+  <composite-id mapped="false" unsaved-value="undefined">
+   <key-property column="Namen" name="name" type="string"/>
+   <key-property column="Parent" name="parent" type="string"/>
+  </composite-id>
+  <many-to-one class="media.mapping.Category" column="parent" name="parent"/>
+  <set name="Namen" table="Category" lazy="false" cascade="all-delete-orphan"
+            inverse="false">
+              <key column="Parent"/>
+              <one-to-many class="media.mapping.Category" />
+     </set>
+	 
+ </class>
 </hibernate-mapping>
