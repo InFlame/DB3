@@ -85,11 +85,11 @@ public class DBImpl implements MediaDbInterface {
 			/*Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("name", "%"));
 			System.out.println(crit.list().size());*/
 			
-			Query q = session.createQuery("from Product");
+			Query q = session.createQuery("from Category");
 			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while(it.hasNext()) {
-				System.out.println(((Product)it.next()).getAsin());
+				System.out.println(((Category)it.next()).getName());
 			}
 			
 			trx.commit();

@@ -2,13 +2,20 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="media.definitions">
-    <class name="Product" table="Produkte">
-        <id column="ASIN" name="asin" type="string">
-            <generator class="native" />
-        </id>
-        
-        <property column="Rating" name="avgRating" type="int" />
-        <property name="title" column="Titel" type="string" />
-        <property name="picUrl" column="PicUrl" type="string" />
-    </class>
+	<class name="Product" table="Produkte">
+		<id column="ASIN" name="asin" type="string">
+			<generator class="native" />
+		</id>
+
+		<!-- <property column="Rating" name="avgRating" type="integer" /> <property 
+			name="title" column="Titel" type="string" /> <property name="picUrl" column="PicUrl" 
+			type="string" /> <property name="salesRank" column="Verkaufsrang" type="integer" 
+			/> -->
+
+		<property column="TYP" name="type">
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">media.definitions.Product$Type</param>
+			</type>
+		</property>
+	</class>
 </hibernate-mapping>
