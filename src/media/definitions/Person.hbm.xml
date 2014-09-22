@@ -6,10 +6,10 @@
 
 <hibernate-mapping package="media.definitions">
 
-<class table="Person" name="Person">
+	<class table="Person" name="Person">
 
-      <id name="name" column="Namen" type="string"/>
+		<id name="name" column="Namen" type="string" />
 
-</class>
+	</class>
 
 </hibernate-mapping>

@@ -48,7 +48,7 @@ public class DBImpl implements MediaDbInterface {
 		 */
 		try {
 			this.dbCon = new DatabaseConnection();
-			this.dbCon.connect("con", prop);
+			//this.dbCon.connect("con", prop);
 
 			sessionFactory = new Configuration().configure().buildSessionFactory();
 			System.out.println("Connection established!");
@@ -60,7 +60,12 @@ public class DBImpl implements MediaDbInterface {
 
 	@Override
 	public void finish() {
-		// TODO Auto-generated method stub
+		try {
+			sessionFactory.close();
+			dbCon.disconnect();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -68,31 +73,20 @@ public class DBImpl implements MediaDbInterface {
 	public List<Product> getProducts(String namePattern) {
 		Session session = null;
 		Transaction trx = null;
-		List results = new ArrayList<Product>();
+		List<Product> results = new ArrayList<Product>();
 
 		try {
 			session = sessionFactory.openSession();
 			trx = session.beginTransaction();
-			Criteria cr = session.createCriteria(Product.class);
-			cr.add(Restrictions.like("title", namePattern));
-			System.out.println("here!");
-			results.addAll(cr.list());
-			System.out.println("----------------------------");
 			
-			System.out.println("QUERY FOR PRODUCTS LIKE : " + namePattern);
-			System.out.println("RESULTS: ");
+			/*Criteria crit = session.createCriteria(Person.class).add(Restrictions.like("name", "Mario%"));
+			System.out.println(crit.list().size());*/
 			
-			//Iterator it = results.iterator();
-			/*while(it.hasNext()) {
-				System.out.println("bla");
-				System.out.println(it.next());
-			}*/
+			/*Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("name", "%"));
+			System.out.println(crit.list().size());*/
 			
-			// TEST
-			/*Person pers = new Person();
-			pers.setName("TESTTEST");
-			System.out.println("new object created");
-			session.save(pers);*/
+			Query q = session.createQuery("from Product");
+			System.out.println(q.list().size());
 			
 			trx.commit();
 		} catch(HibernateException e) {
@@ -159,15 +153,7 @@ public class DBImpl implements MediaDbInterface {
 			trx = session.beginTransaction();
 
 			Query hqlQuery = session.createQuery(query);
-			/*hqlQuery.setResultTransformer(new AliasToEntityMapResultTransformer());
-			List<Map <String, Object>> aliasToValueMap = hqlQuery.list();
 
-			Iterator it = aliasToValueMap.iterator();*/
-
-			Iterator it = hqlQuery.list().iterator();
-			while(it.hasNext()) {
-				System.out.println(it.next());
-			}
 			
 		} catch(HibernateException e) {
 			if(trx != null) {
@@ -233,7 +219,27 @@ public class DBImpl implements MediaDbInterface {
 
 	@Override
 	public DVD getDVD(String id) {
-		// TODO Auto-generated method stub
+		DVD dvd;
+		Session session = null;
+		Transaction trx = null;
+		
+		try {
+			session = sessionFactory.openSession();
+			trx = session.beginTransaction();
+			
+			Criteria cr = session.createCriteria(DVD.class);
+			cr.add(Restrictions.eq("ASIN", id));
+			
+			List result = cr.list();
+			Iterator it = result.iterator();
+			if(it.hasNext()) return (DVD)it.next();
+		} catch(HibernateException e) {
+			if(trx != null) {
+				try {trx.rollback(); } catch(HibernateException he) {}
+			}
+		} finally {
+			try { if( session != null ) session.close(); } catch( Exception exC1 ) {}
+		}
 		return null;
 	}
 

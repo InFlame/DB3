@@ -11,7 +11,7 @@
 		<!-- number wohl nicht richtig da wir dies nicht haben stateNew fehlt in 
 			der DB avgRating fehlt in der DB -->
 		<property column="Verkaufsrang" generated="never" lazy="false"
-			name="salesRank" insert="false" update="false"/>
+			name="salesRank" insert="false" update="false" />
 		<property column="Titel" generated="never" lazy="false" name="title" />
 		<!-- Price ist nicht eindeutig würde nur den ersten Preis nehmen currency 
 			fehlt in der DB available ist kein boolean mapping fehler -->
@@ -29,16 +29,18 @@
 			</key>
 			<one-to-many class="Review" />
 		</set>
-		<!-- <property column="TYP" generated="never" lazy="false" name="type"
+		<!-- <property column="TYP" generated="never" lazy="false" name="type" 
 			type="org.hibernate.type.EnumType" /> -->
 		<property column="TYP" name="type">
-		    <type name="org.hibernate.type.EnumType">
-		        <param name="enumClass">media.definitions.Product$Type</param>
-		    </type>
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">media.definitions.Product$Type</param>
+			</type>
 		</property>
-
-		<joined-subclass name="media.definitions.Book" table="Buch">
+		<!--############################################ Buch ############################### -->
+		<joined-subclass name="media.definitions.Book"
+			extends="media.definitions.Product" table="Buch" lazy="false">
 			<key column="ASIN" />
+
 			<property column="ISBN" generated="never" lazy="false" name="isbn" />
 			<property column="Seitenzahl" generated="never" lazy="false"
 				name="pages" />
@@ -62,21 +64,48 @@
 				<many-to-many class="Person" column="Namen" unique="false" />
 			</set>
 		</joined-subclass>
-		<joined-subclass extends="Product" name="DVD">
+		<!--############################################ DVD ############################### -->
+		<joined-subclass name="media.definitions.DVD" extends="media.definitions.Product"
+			table="DVD" lazy="false">
 			<key column="ASIN" />
-			<property column="Format" generated="never" lazy="false"
-				name="format" type="string" />
-			<property column="RegionCode" generated="never" lazy="false"
-				name="regionCode" type="java.lang.Integer" />
-			<property column="Laufzeit" generated="never" lazy="false"
-				name="runningTime" type="java.lang.Integer" />
-			<set cascade="all" fetch="select" lazy="true" name="actors" sort="unsorted"
-				table="TEAM">
-				<key column="ASIN" />
-				<!-- Prüfen ob das so geht -->
-				<many-to-many class="DVD" column="Position" unique="false"
-					where="Position=&quot;actors&quot;" />
+			<property name="format" type="java.lang.String">
+				<column name="FORMAT" />
+			</property>
+	        
+			<property name="regionCode" type="java.lang.String">
+				<column name="REGIONCODE" />
+			</property>
+			<property name="runningTime" type="java.lang.Integer">
+				<column name="LAUFZEIT" />
+			</property>
+			<set name="actors" cascade="save-update" table="TEAM">
+				<key column="asin" />
+				<many-to-many column="Name" class="Person" />
+				<formula>
+					(select * from Team t where t.Position = 'actors' )
+				</formula>
 			</set>
+			<set name="creators" cascade="save-update" table="TEAM">
+				<key column="asin" />
+				<many-to-many column="Name" class="Person" />
+				<formula>
+					(select * from Team t where t.Position = 'creators' )
+				</formula>
+			</set>
+			<set name="directors" cascade="save-update" table="TEAM">
+				<key column="asin" />
+				<many-to-many column="Name" class="Person" />
+				<formula>
+					(select * from Team t where t.Position = 'directors' )
+				</formula>
+			</set>
+		</joined-subclass>
+		<!--############################################ Musik ############################### -->
+		<joined-subclass name="media.definitions.CD" extends="media.definitions.Product"
+			table="CD" lazy="false">
+			<key column="ASIN" />
+			<property column="ReleaseDate" name="releaseDate" />
+			<!-- müssen noch labels, tracks und artist mappen -->
 		</joined-subclass>
 	</class>
 </hibernate-mapping>
