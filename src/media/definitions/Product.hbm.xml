@@ -78,30 +78,21 @@
 			<property name="runningTime" type="java.lang.Integer">
 				<column name="LAUFZEIT" />
 			</property>
-			<set name="actors" cascade="save-update" table="TEAM">
+			<set name="actors" cascade="save-update" table="TEAM" where="Team.Position = 'actors'">
 				<key column="asin" />
 				<many-to-many column="Name" class="Person" />
-				<formula>
-					(select * from Team t where t.Position = 'actors' )
-				</formula>
 			</set>
-			<set name="creators" cascade="save-update" table="TEAM">
+			<set name="creators" cascade="save-update" table="TEAM" where="Team.Position = 'creators'">
 				<key column="asin" />
 				<many-to-many column="Name" class="Person" />
-				<formula>
-					(select * from Team t where t.Position = 'creators' )
-				</formula>
 			</set>
-			<set name="directors" cascade="save-update" table="TEAM">
+			<set name="directors" cascade="save-update" table="TEAM" where="Team.Position = 'directors'">
 				<key column="asin" />
 				<many-to-many column="Name" class="Person" />
-				<formula>
-					(select * from Team t where t.Position = 'directors' )
-				</formula>
 			</set>
 		</joined-subclass>
 		<!--############################################ Musik ############################### -->
-		<joined-subclass name="media.definitions.CD" extends="media.definitions.Product"
+		<joined-subclass name="media.definitions.Music" extends="media.definitions.Product"
 			table="CD" lazy="false">
 			<key column="ASIN" />
 			<property column="ReleaseDate" name="releaseDate" />

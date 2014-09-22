@@ -48,7 +48,7 @@ public class DBImpl implements MediaDbInterface {
 		 */
 		try {
 			this.dbCon = new DatabaseConnection();
-			//this.dbCon.connect("con", prop);
+			this.dbCon.connect("con", prop);
 
 			sessionFactory = new Configuration().configure().buildSessionFactory();
 			System.out.println("Connection established!");
@@ -87,6 +87,10 @@ public class DBImpl implements MediaDbInterface {
 			
 			Query q = session.createQuery("from Product");
 			System.out.println(q.list().size());
+			Iterator it = q.list().iterator();
+			while(it.hasNext()) {
+				System.out.println(((Product)it.next()).getAsin());
+			}
 			
 			trx.commit();
 		} catch(HibernateException e) {
