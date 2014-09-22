@@ -7,6 +7,6 @@
 			<generator class="native" />
 		</id>
 		
-		<property name="type" column="Typ" not-null="true"/>
+		<!-- <property name="type" column="Typ" not-null="true"/> -->
 	</class>
 </hibernate-mapping>

@@ -85,15 +85,16 @@ public class DBImpl implements MediaDbInterface {
 			/*Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("name", "%"));
 			System.out.println(crit.list().size());*/
 			
-			Query q = session.createQuery("from Offer");
+			Query q = session.createQuery("from Category");
 			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while(it.hasNext()) {
-				System.out.println(((Offer)it.next()).getProduct());
+				System.out.println(((Category)it.next()).getParent());
 			}
 			
 			//trx.commit();
 		} catch(HibernateException e) {
+			e.printStackTrace();
 			if(trx != null) {
 				try { trx.rollback(); } catch(HibernateException he) {}
 			}
@@ -285,7 +286,7 @@ public class DBImpl implements MediaDbInterface {
 			session = sessionFactory.openSession();
 			trx = session.beginTransaction();
 			
-			Criteria crit = session.createCriteria(Offer.class).add(Restrictions.eq("product", product));	// possibly not :/
+			Criteria crit = session.createCriteria(Offer.class).add(Restrictions.eq("product", product));	// probably not :/
 			offers.addAll((List<Offer>)crit.list());
 
 		} catch(HibernateException e) {
