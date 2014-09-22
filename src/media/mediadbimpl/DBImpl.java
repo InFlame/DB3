@@ -85,14 +85,14 @@ public class DBImpl implements MediaDbInterface {
 			/*Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("name", "%"));
 			System.out.println(crit.list().size());*/
 			
-			Query q = session.createQuery("from Product");
+			Query q = session.createQuery("from Offer");
 			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while(it.hasNext()) {
-				System.out.println(((Product)it.next()).getAsin());
+				System.out.println(((Offer)it.next()).getProduct());
 			}
 			
-			trx.commit();
+			//trx.commit();
 		} catch(HibernateException e) {
 			if(trx != null) {
 				try { trx.rollback(); } catch(HibernateException he) {}
@@ -157,6 +157,7 @@ public class DBImpl implements MediaDbInterface {
 			trx = session.beginTransaction();
 
 			Query hqlQuery = session.createQuery(query);
+			System.out.println(hqlQuery.list().size());
 
 			
 		} catch(HibernateException e) {
@@ -189,8 +190,23 @@ public class DBImpl implements MediaDbInterface {
 
 	@Override
 	public void addNewReview(Review review) {
-		// TODO Auto-generated method stub
+		Session session = null;
+		Transaction trx = null;
 		
+		try {
+			session = sessionFactory.openSession();
+			trx = session.beginTransaction();
+
+			Review rev = review;
+			
+			trx.commit();
+		} catch(HibernateException e) {
+			if(trx != null) {
+				try {trx.rollback(); } catch(HibernateException he) {}
+			}
+		} finally {
+			try { if( session != null ) session.close(); } catch( Exception exC1 ) {}
+		}
 	}
 
 	@Override
@@ -261,8 +277,25 @@ public class DBImpl implements MediaDbInterface {
 
 	@Override
 	public List<Offer> getOffers(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		Transaction trx = null;
+		List<Offer> offers = new ArrayList<Offer>();
+
+		try {
+			session = sessionFactory.openSession();
+			trx = session.beginTransaction();
+			
+			Criteria crit = session.createCriteria(Offer.class).add(Restrictions.eq("product", product));	// possibly not :/
+			offers.addAll((List<Offer>)crit.list());
+
+		} catch(HibernateException e) {
+			if(trx != null) {
+				try { trx.rollback(); } catch(HibernateException he) {}
+			}
+		} finally {
+			try { if( session != null ) session.close(); } catch( Exception exCl ) {}
+		}
+		return offers;
 	}
 
 }
