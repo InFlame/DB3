@@ -7,20 +7,6 @@ package media.definitions;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.LinkedHashSet;
-
-import javax.persistence.Embeddable;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Table;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;  
-import javax.persistence.OneToMany; 
-import javax.persistence.CascadeType;
-import javax.persistence.JoinTable;
 /**
  * @author Silvio Paschke, Stefan Endrullis
  */

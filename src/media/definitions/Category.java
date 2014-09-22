@@ -10,10 +10,6 @@ package media.definitions;
 import java.io.Serializable;
 import java.util.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 /**
  * @author Silvio Paschke, Stefan Endrullis
  */
