@@ -29,13 +29,8 @@
 			</key>
 			<one-to-many class="Review" />
 		</set>
-		<!-- <property column="TYP" generated="never" lazy="false" name="type" 
-			type="org.hibernate.type.EnumType" /> -->
-		<property column="TYP" name="type">
-			<type name="org.hibernate.type.EnumType">
-				<param name="enumClass">media.definitions.Product$Type</param>
-			</type>
-		</property>
+		
+		<property name="type" column="Typ" not-null="true"/>
 		<!--############################################ Buch ############################### -->
 		<joined-subclass name="media.definitions.Book"
 			extends="media.definitions.Product" table="Buch" lazy="false">
