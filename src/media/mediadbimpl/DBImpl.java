@@ -82,7 +82,7 @@ public class DBImpl implements MediaDbInterface {
 			/*Criteria crit = session.createCriteria(Person.class).add(Restrictions.like("name", "Mario%"));
 			System.out.println(crit.list().size());*/
 			
-			Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("title", "%"));
+			Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("title", namePattern));
 			results.addAll(crit.list());
 			//System.out.println(crit.list().size());
 			
