@@ -82,17 +82,19 @@ public class DBImpl implements MediaDbInterface {
 			/*Criteria crit = session.createCriteria(Person.class).add(Restrictions.like("name", "Mario%"));
 			System.out.println(crit.list().size());*/
 			
-			/*Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("name", "%"));
-			System.out.println(crit.list().size());*/
+			Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("title", "%"));
+			results.addAll(crit.list());
+			//System.out.println(crit.list().size());
 			
-			Query q = session.createQuery("from Review");
+			/*Query q = session.createQuery("from Product");
 			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while(it.hasNext()) {
-				System.out.println(((Review)it.next()).getUsername());
-			}
+				System.out.println(((Product)it.next()).getTitle());
+			}*/
 			
 			//trx.commit();
+			return results;
 		} catch(HibernateException e) {
 			e.printStackTrace();
 			if(trx != null) {
@@ -102,7 +104,7 @@ public class DBImpl implements MediaDbInterface {
 			try { if( session != null ) session.close(); } catch( Exception exCl ) {}
 		}
 		
-		return results;
+		return null;
 	}
 
 	@Override

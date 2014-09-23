@@ -93,10 +93,10 @@
 			<key column="ASIN" />
 			<property column="ReleaseDate" name="releaseDate" />
 			<!-- müssen noch labels, tracks und artist mappen -->
-			<set name="tracks" table="Lied">
+			<!-- <set name="tracks" table="Lied">
 			    <key column="Asin" />
 				<many-to-many column="titel" class="media.definitions.Music$Track" />
-			</set>
+			</set> -->
 		</joined-subclass>
 	</class>
 </hibernate-mapping>
