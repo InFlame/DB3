@@ -99,7 +99,7 @@ public class Categories extends JComponent implements Component {
 					categories[i] = (Category) ((DefaultMutableTreeNode) ancs[i]).getUserObject();
 				}
 				try {
-					fillProductList(categories);
+					//fillProductList(categories);
 				} catch (Exception q) {
 					System.err
 							.println("Die Produktliste konnte nicht geladen werden (Categories.class)");

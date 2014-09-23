@@ -173,7 +173,25 @@ public class DBImpl implements MediaDbInterface {
 
 	@Override
 	public Category getCategoryTree() {
-		// TODO Auto-generated method stub
+		Session session = null;
+		Transaction trx = null;
+		
+		try {
+			session = sessionFactory.openSession();
+			trx = session.beginTransaction();
+			
+			Criteria parentNode = session.createCriteria(Category.class)
+					.add(Restrictions.eq("name", "parent"));
+			
+			Category cat = (Category)parentNode.list().get(0);
+			
+			return cat;
+		} catch(HibernateException e) {
+			e.printStackTrace();
+			if(trx != null) {
+				try {trx.rollback(); } catch(HibernateException he) {}
+			}
+		}
 		return null;
 	}
 
