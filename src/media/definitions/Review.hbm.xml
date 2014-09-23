@@ -4,7 +4,7 @@
 <hibernate-mapping>
 <class table="Review" name="media.definitions.Review">
 	 <composite-id>
-	  <key-property name="username" type="string" column="User"/> 
+	  <key-property name="username" type="string" column="Benutzer"/> 
 	 </composite-id>
 	
 	 <many-to-one name="product" class="media.definitions.Product" fetch="select">
