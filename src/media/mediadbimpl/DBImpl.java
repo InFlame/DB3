@@ -6,7 +6,6 @@ import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import media.definitions.Book;
@@ -15,12 +14,12 @@ import media.definitions.DVD;
 import media.definitions.MediaDbInterface;
 import media.definitions.Music;
 import media.definitions.Offer;
-import media.definitions.Person;
 import media.definitions.Product;
 import media.definitions.Review;
 import media.definitions.SQLResult;
 
 import org.hibernate.Criteria;
+import org.hibernate.EntityMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -28,7 +27,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.AliasToEntityMapResultTransformer;
+import org.hibernate.metadata.ClassMetadata;
+import org.hibernate.type.Type;
 
 public class DBImpl implements MediaDbInterface {
 
@@ -85,11 +85,11 @@ public class DBImpl implements MediaDbInterface {
 			/*Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("name", "%"));
 			System.out.println(crit.list().size());*/
 			
-			Query q = session.createQuery("from Product");
-			//System.out.println(q.list().size());
+			Query q = session.createQuery("from Review");
+			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while(it.hasNext()) {
-				System.out.println(((Product)it.next()).getTitle());
+				System.out.println(((Review)it.next()).getUsername());
 			}
 			
 			//trx.commit();
@@ -153,15 +153,43 @@ public class DBImpl implements MediaDbInterface {
 		SQLResult result = new SQLResult();
 
 		try {
-
 			session = sessionFactory.openSession();
 			trx = session.beginTransaction();
 
-			Query hqlQuery = session.createQuery(query);
-			System.out.println(hqlQuery.list().size());
+			Query q = session.createQuery(query);
+			//ersten datentyp auslesen
+			Type singleType = q.getReturnTypes()[0];
+			//ist datentyp primitiv?
+			boolean nichtprimitiv = singleType.isAssociationType();
+			
+			ClassMetadata metadata = sessionFactory.getClassMetadata(singleType.getName());
+			if (nichtprimitiv) {
+				String[] propertyNames = metadata.getPropertyNames();
+				result.setHeader(propertyNames);
+			}
+			
+			Type[] propertyTypes = metadata.getPropertyTypes();
+			
+			List<Object> objectlist = q.list();
+			Iterator<Object> it = objectlist.iterator();
+			while(it.hasNext()){
+				Object next = it.next();
+				Object[] values = metadata.getPropertyValues(next, EntityMode.POJO);
+				String[] row = new String[values.length];
+				for (int i=0 ; i<values.length ; i++){
+					row[i] = values[i].toString();
+				}
+				result.addRow(row);
+			}
+			
 
+			/*result.setHeader(new String[]{"1", "2"});
+			List<String[]> list = new ArrayList<String[]>();
+			list.add(new String[]{"3", "4"});
+			result.setBody(list);*/
 			
 		} catch(HibernateException e) {
+			e.printStackTrace();
 			if(trx != null) {
 				try {trx.rollback(); } catch(HibernateException he) {}
 			}
