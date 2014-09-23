@@ -6,12 +6,13 @@
 		<id column="Namen" name="name" type="string">
 			<generator class="native" />
 		</id>
-		<!-- <composite-id mapped="false" unsaved-value="undefined"> <key-property 
-			column="Namen" name="name" type="string" /> <key-property column="Parent" 
-			name="parent" type="string" /> </composite-id> -->
 		<many-to-one class="media.definitions.Category" name="parent"
 			insert="false" update="false" column="parent">
 		</many-to-one>
-		<property name="parent" column="parent" />
+		
+		<set name="children" table="Kategorie">
+		    <key column="Parent" />
+		    <one-to-many class="media.definitions.Category" />
+		</set>
 	</class>
 </hibernate-mapping>

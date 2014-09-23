@@ -89,7 +89,7 @@ public class DBImpl implements MediaDbInterface {
 			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while(it.hasNext()) {
-				System.out.println(((Category)it.next()).getParent());
+				System.out.println(((Category)it.next()).getChildren());
 			}
 			
 			//trx.commit();
