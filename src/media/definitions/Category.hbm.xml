@@ -2,21 +2,17 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="media.definitions">
-	<class name="Category" table="Kategorie">
-		<composite-id mapped="false" unsaved-value="undefined">
-			<key-property column="Namen" name="name" type="string" />
-			<key-property column="Parent" name="parent" type="string" />
-		</composite-id>
-		<many-to-one class="media.definitions.Category"
-			name="parent" insert="false" update="false">
-			<column name="Namen" />
-			<column name="Parent" />
+	<class name="Category" table="V_Category">
+		<id column="Namen" name="name" type="string">
+			<generator class="native" />
+		</id>
+		<many-to-one class="media.definitions.Category" name="parent"
+			insert="false" update="false" column="parent">
 		</many-to-one>
-		<!-- <set name="Namen" table="Category" lazy="false" cascade="all-delete-orphan"
-			inverse="false">
-			<key column="Parent" />
-			<one-to-many class="media.definitions.Category" />
-		</set> -->
-
+		
+		<set name="children" table="V_Category">
+		    <key column="Parent" />
+		    <one-to-many class="media.definitions.Category" />
+		</set>
 	</class>
 </hibernate-mapping>

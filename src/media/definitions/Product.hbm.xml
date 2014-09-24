@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="media.definitions">
-	<class name="Product" table="Produkte">
+	<class name="Product" table="V_Product">
 		<id column="ASIN" name="asin" type="string">
 			<generator class="native" />
 		</id>
@@ -17,13 +17,13 @@
 		<property column="PicUrl" generated="never" lazy="false" name="picUrl" type="string" />
 		
 		<set cascade="all" fetch="select" lazy="true" name="categories"
-			sort="unsorted" table="teilVon">
+			sort="unsorted" table="V_teilVon">
 			<key column="ASIN" foreign-key="Parent" />
 			<one-to-many class="Category" />
 		</set>
 		
 		<set fetch="select" inverse="true" lazy="true" name="reviews"
-			sort="unsorted" table="Review">
+			sort="unsorted" table="V_Review">
 			<key>
 				<column name="ASIN" not-null="true" />
 			</key>
@@ -34,7 +34,7 @@
 		
 		<!--############################################ Buch ############################### -->
 		<joined-subclass name="media.definitions.Book"
-			extends="media.definitions.Product" table="Buch" lazy="false">
+			extends="media.definitions.Product" table="V_Book" lazy="false">
 			<key column="ASIN" />
 
 			<property column="ISBN" generated="never" lazy="false" name="isbn" type="string" />
@@ -46,7 +46,7 @@
 			<!-- wir haben nur einen Publisher -->
 
 			<set fetch="select" inverse="true" lazy="true" name="publishers"
-				sort="unsorted" table="Buch">
+				sort="unsorted" table="V_Book">
 				<key>
 					<column name="Publisher" not-null="true" />
 				</key>
@@ -55,14 +55,14 @@
 
 
 			<set cascade="all" fetch="select" lazy="true" name="authors"
-				sort="unsorted" table="hatAutor">
+				sort="unsorted" table="V_hatAutor">
 				<key column="ASIN" />
 				<many-to-many class="Person" column="Namen" unique="false" />
 			</set>
 		</joined-subclass>
 		<!--############################################ DVD ############################### -->
 		<joined-subclass name="media.definitions.DVD" extends="media.definitions.Product"
-			table="DVD" lazy="false">
+			table="V_DVD" lazy="false">
 			<key column="ASIN" />
 			<property name="format" type="java.lang.String">
 				<column name="FORMAT" />
@@ -74,22 +74,22 @@
 			<property name="runningTime" type="java.lang.Integer">
 				<column name="LAUFZEIT" />
 			</property>
-			<set name="actors" cascade="save-update" table="TEAM" where="Team.Position = 'actors'">
+			<set name="actors" cascade="save-update" table="V_TEAM" where="Team.Position = 'actors'">
 				<key column="asin" />
 				<many-to-many column="Name" class="Person" />
 			</set>
-			<set name="creators" cascade="save-update" table="TEAM" where="Team.Position = 'creators'">
+			<set name="creators" cascade="save-update" table="V_TEAM" where="Team.Position = 'creators'">
 				<key column="asin" />
 				<many-to-many column="Name" class="Person" />
 			</set>
-			<set name="directors" cascade="save-update" table="TEAM" where="Team.Position = 'directors'">
+			<set name="directors" cascade="save-update" table="V_TEAM" where="Team.Position = 'directors'">
 				<key column="asin" />
 				<many-to-many column="Name" class="Person" />
 			</set>
 		</joined-subclass>
 		<!--############################################ Musik ############################### -->
 		<joined-subclass name="media.definitions.Music" extends="media.definitions.Product"
-			table="CD" lazy="false">
+			table="V_Music" lazy="false">
 			<key column="ASIN" />
 			<property column="ReleaseDate" name="releaseDate" />
 			<!-- müssen noch labels, tracks und artist mappen -->

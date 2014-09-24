@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="media.definitions">
-	<class table="Review" name="Review">
+	<class table="V_Review" name="Review">
 		<!-- <id column="Benutzer" name="username" type="string">
 			<generator class="native" />
 		</id> -->
