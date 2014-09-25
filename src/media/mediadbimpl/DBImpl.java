@@ -86,11 +86,11 @@ public class DBImpl implements MediaDbInterface {
 			results.addAll(crit.list());*/
 			//System.out.println(crit.list().size());
 			
-			Query q = session.createQuery("from Product");
+			Query q = session.createQuery("from DVD");
 			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while(it.hasNext()) {
-				System.out.println(((Product)it.next()).getCategories());
+				System.out.println(((DVD)it.next()).getFormat());
 			}
 			
 			//trx.commit();
@@ -306,7 +306,6 @@ public class DBImpl implements MediaDbInterface {
 
 	@Override
 	public DVD getDVD(String id) {
-		DVD dvd;
 		Session session = null;
 		Transaction trx = null;
 		
@@ -332,13 +331,51 @@ public class DBImpl implements MediaDbInterface {
 
 	@Override
 	public Music getMusic(String id) {
-		// TODO Auto-generated method stub
+		Session session = null;
+		Transaction trx = null;
+		
+		try {
+			session = sessionFactory.openSession();
+			trx = session.beginTransaction();
+			
+			Criteria cr = session.createCriteria(Music.class);
+			cr.add(Restrictions.eq("ASIN", id));
+			
+			List result = cr.list();
+			Iterator it = result.iterator();
+			if(it.hasNext()) return (Music)it.next();
+		} catch(HibernateException e) {
+			if(trx != null) {
+				try {trx.rollback(); } catch(HibernateException he) {}
+			}
+		} finally {
+			try { if( session != null ) session.close(); } catch( Exception exC1 ) {}
+		}
 		return null;
 	}
 
 	@Override
 	public Book getBook(String id) {
-		// TODO Auto-generated method stub
+		Session session = null;
+		Transaction trx = null;
+		
+		try {
+			session = sessionFactory.openSession();
+			trx = session.beginTransaction();
+			
+			Criteria cr = session.createCriteria(Book.class);
+			cr.add(Restrictions.eq("ASIN", id));
+			
+			List result = cr.list();
+			Iterator it = result.iterator();
+			if(it.hasNext()) return (Book)it.next();
+		} catch(HibernateException e) {
+			if(trx != null) {
+				try {trx.rollback(); } catch(HibernateException he) {}
+			}
+		} finally {
+			try { if( session != null ) session.close(); } catch( Exception exC1 ) {}
+		}
 		return null;
 	}
 

@@ -9,5 +9,6 @@
             <key-property name="location" type="string" column="FName"/>
         </composite-id>
         <property name="price" column="Preis" />
+        <property name="currency" column="waehrung" type="string" />
     </class>
 </hibernate-mapping>
