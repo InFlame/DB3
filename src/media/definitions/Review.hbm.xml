@@ -3,18 +3,14 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="media.definitions">
 	<class table="V_Review" name="Review">
-		<!-- <id column="Benutzer" name="username" type="string">
-			<generator class="native" />
-		</id> -->
 		<composite-id>
-		    <key-property name="username" column="Benutzer" type="string" />
-		    <key-property name="content" column="Summary"/>
-		</composite-id>
-		
-		    <many-to-one  name="product" column="ASIN" class="Product"/>
-		
-		<property name="rating" column="bewertung" />
-		<property name="helpful_vo" column="Helpful" />
-		<property name="Date" column="date" /> 
+            <key-property name="username" column="Benutzer" type="string"/>
+            <key-property name="content" column="Summary" type="string"/>		
+        </composite-id>
+		<many-to-one  name="product" column="ASIN" class="Product"/>
+		<property name="rating" column="bewertung" insert="false" update="false" type="integer"/>
+		<property name="content" column="Summary" type="string"/>
+		<property name="helpful_vo" column="Helpful"  type="integer"/>
+		<property name="Date" column="date" type="date"/> 
 	</class>
 </hibernate-mapping>
