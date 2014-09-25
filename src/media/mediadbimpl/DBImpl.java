@@ -475,7 +475,7 @@ public class DBImpl implements MediaDbInterface {
 		Session session = null;
 		Transaction trx = null;
 		List<Offer> offers = new ArrayList<Offer>();
-
+		
 		try {
 			session = sessionFactory.openSession();
 			trx = session.beginTransaction();

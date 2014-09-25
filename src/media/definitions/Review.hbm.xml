@@ -9,7 +9,7 @@
         </composite-id>
 		<many-to-one  name="product" column="ASIN" class="Product"/>
 		<property name="rating" column="bewertung" insert="false" update="false" type="integer"/>
-		<property name="helpful_vo" column="Helpful"  type="integer"/>
+		<property name="helpful_vo" column="Helpful_vo"  type="integer"/>
 		<property name="date" column="datum" type="date"/> 
 	</class>
 </hibernate-mapping>
