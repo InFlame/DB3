@@ -3,7 +3,9 @@
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="media.definitions">
 	<class name="Music$Track" table="V_Track">
-
-	</class>	
+		<id column="namen" name="name" type="string">
+			<generator class="native" />
+		</id>
+	</class>
 </hibernate-mapping>
 	

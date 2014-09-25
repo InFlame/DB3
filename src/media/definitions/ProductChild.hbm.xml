@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="media.definitions">
+	<class name="ProductChild" table="V_TRACK">
+		<!-- <composite-id>
+		    <key-property name="name" column="Titel" type="string" />
+		    <key-many-to-one name="product" column="ASIN" class="media.definitions.Product" />
+		</composite-id> -->
+		
+		<id name="name" column="Titel" type="string" />
+	</class>
+</hibernate-mapping>

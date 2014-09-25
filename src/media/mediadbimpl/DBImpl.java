@@ -93,11 +93,11 @@ public class DBImpl implements MediaDbInterface {
 			 */
 			// System.out.println(crit.list().size());
 
-			Query q = session.createQuery("from Review");
+			Query q = session.createQuery("from Product");
 			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while (it.hasNext()) {
-				System.out.println(((Review) it.next()).getHelpful_vo());
+				System.out.println(((Product) it.next()).getReviews());
 			}
 
 			// trx.commit();
@@ -287,18 +287,21 @@ public class DBImpl implements MediaDbInterface {
 	@Override
 	public List<Product> getReviewProducts() {
 		Session session = null;
+		Transaction trx = null;
 		List<Product> productList = new ArrayList<Product>();
 
 		try {
+			System.out.println("func call");
 			session = sessionFactory.openSession();
-			/*
-			 * List list =
-			 * session.createQuery("from Product where reviews is not null"
-			 * ).list(); //productList.addAll(list); Iterator it =
-			 * list.iterator(); System.out.println(list.size());
-			 * while(it.hasNext()) { Product p = (Product)it.next();
-			 * if(!p.getReviews().isEmpty()) productList.add(p); }
-			 */
+			trx = session.beginTransaction();
+			
+			List list =	session.createQuery("from Product").list(); 
+			Iterator it = list.iterator(); 
+			System.out.println(list.size());
+			while(it.hasNext()) { 
+				Product p = (Product)it.next();
+				if(!p.getReviews().isEmpty()) productList.add(p); 
+			}
 
 			return productList;
 		} catch (HibernateException e) {

@@ -1,9 +1,11 @@
 package media.definitions;
 
+import java.io.Serializable;
+
 /**
  * @author Stefan Endrullis
  */
-public abstract class ProductChild<P extends Product> {
+public abstract class ProductChild<P extends Product> implements Serializable {
 	protected Long id;
 	protected P product;
 	protected String name;

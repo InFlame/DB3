@@ -34,7 +34,7 @@
 		
 		<set cascade="all" lazy="true" name="reviews" table="V_Review">
 			<key>
-				<column name="asin" not-null="true" />
+				<column name="asin" not-null="true" default="null"/>
 			</key>
 			<one-to-many class="Review" />
 		</set>
@@ -105,6 +105,14 @@
 			<!-- <set name="tracks" table="Lied">
 			    <key column="Asin" />
 				<many-to-many column="titel" class="media.definitions.Music$Track" />
+			</set> -->
+			<set name="artists" cascade="save-update" table="V_INTERPRET">
+			    <key column="asin" />
+			    <many-to-many column="Namen" class="Person" />
+			</set>
+			<!-- <set name="tracks" cascade="save-update" table="V_TRACK">
+			    <key column="asin" />
+			    <many-to-many column="Titel" class="Music$Track" />
 			</set> -->
 		</joined-subclass>
 	</class>

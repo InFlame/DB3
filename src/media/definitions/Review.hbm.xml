@@ -3,6 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="media.definitions">
 	<class table="V_Review" name="Review">
+	    <!-- <id name="username" column="Benutzer" type="string" /> -->
 		<composite-id>
             <key-property name="username" column="Benutzer" type="string"/>
             <key-property name="content" column="Summary" type="string"/>		
