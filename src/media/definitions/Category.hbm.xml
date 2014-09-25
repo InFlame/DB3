@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="media.definitions">
-	<class name="Category" table="V_Categorie">
+	<class name="Category" table="V_Category">
 		<id column="Namen" name="name" type="string">
 			<generator class="native" />
 		</id>
@@ -10,7 +10,7 @@
 			insert="false" update="false" column="parent">
 		</many-to-one>
 
-		<set name="children" table="Kategorie">
+		<set name="children" table="V_Category">
 			<key column="Parent" />
 			<one-to-many class="media.definitions.Category" />
 		</set>
