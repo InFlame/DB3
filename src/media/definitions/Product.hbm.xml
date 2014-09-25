@@ -26,8 +26,7 @@
 		    <many-to-many column="namen" class="Category" />
 		</set>
 		
-		<set fetch="select" inverse="true" lazy="true" name="reviews"
-			sort="unsorted" table="V_Review">
+		<set cascade="all" lazy="true" name="reviews" table="V_Review">
 			<key>
 				<column name="asin" not-null="true" />
 			</key>

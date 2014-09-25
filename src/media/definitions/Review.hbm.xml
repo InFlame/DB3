@@ -8,18 +8,13 @@
 		</id> -->
 		<composite-id>
 		    <key-property name="username" column="Benutzer" type="string" />
-		    <key-many-to-one name="product" class="media.definitions.Product" column="asin" />
+		    <key-property name="content" column="Summary"/>
 		</composite-id>
-
-		<!-- <many-to-one name="product" class="media.definitions.Product" fetch="select"> 
-			<column name="ASIN" not-null="true" /> </many-to-one> -->
-		<!-- <property name="rating" column="Bewertung" />
+		
+		    <many-to-one  name="product" column="ASIN" class="Product"/>
+		
+		<property name="rating" column="bewertung" />
 		<property name="helpful_vo" column="Helpful" />
-		<property name="date" column="Datum" />
-		<property name="content" column="Summary" /> -->
-
-
-
-
+		<property name="Date" column="date" /> 
 	</class>
 </hibernate-mapping>
