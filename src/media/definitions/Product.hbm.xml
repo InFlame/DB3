@@ -79,15 +79,15 @@
 			</property>
 			<set name="actors" cascade="save-update" table="V_Actors" >
 				<key column="asin" />
-				<many-to-many column="Name" class="Person" />
+				<many-to-many column="Namen" class="Person" />
 			</set>
 			<set name="creators" cascade="save-update" table="V_Creator" >
 				<key column="asin" />
-				<many-to-many column="Name" class="Person" />
+				<many-to-many column="Namen" class="Person" />
 			</set>
 			<set name="directors" cascade="save-update" table="V_Director" >
 				<key column="asin" />
-				<many-to-many column="Name" class="Person" />
+				<many-to-many column="Namen" class="Person" />
 			</set>
 		</joined-subclass>
 		<!--############################################ Musik ############################### -->

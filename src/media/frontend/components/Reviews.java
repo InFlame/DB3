@@ -184,12 +184,12 @@ public class Reviews extends JComponent implements Component {
 			root.add(productNode);
 
 			productNode.add(new DefaultMutableTreeNode(loadReviews, false));
-			/*
+			
 			for (Review review : product.getReviews()) {
 				DefaultMutableTreeNode reviewNode = new DefaultMutableTreeNode(review, false);
 				productNode.add(reviewNode);
 			}
-			*/
+			
 		}
 
 		this.productTree = new JTree(root);

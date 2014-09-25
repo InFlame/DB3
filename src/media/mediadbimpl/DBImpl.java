@@ -86,11 +86,11 @@ public class DBImpl implements MediaDbInterface {
 			results.addAll(crit.list());*/
 			//System.out.println(crit.list().size());
 			
-			Query q = session.createQuery("from DVD");
+			Query q = session.createQuery("from Product where Reviews is not null");
 			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while(it.hasNext()) {
-				System.out.println(((DVD)it.next()).getFormat());
+				System.out.println(((Product)it.next()).getAsin());
 			}
 			
 			//trx.commit();
@@ -251,7 +251,17 @@ public class DBImpl implements MediaDbInterface {
 
 	@Override
 	public List<Product> getReviewProducts() {
-		// TODO Auto-generated method stub
+		Session session = null;
+		List<Product> productList = new ArrayList<Product>();
+		
+		try {
+			productList.addAll(session.createQuery("from Product where Reviews is not null").list());
+			return productList;
+		} catch(HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			try { if( session != null ) session.close(); } catch( Exception exC1 ) {}
+		}
 		return null;
 	}
 
@@ -278,7 +288,6 @@ public class DBImpl implements MediaDbInterface {
 
 	@Override
 	public Product getProduct(String id) {
-		Product prod;
 		Session session = null;
 		Transaction trx = null;
 		
@@ -314,7 +323,7 @@ public class DBImpl implements MediaDbInterface {
 			trx = session.beginTransaction();
 			
 			Criteria cr = session.createCriteria(DVD.class);
-			cr.add(Restrictions.eq("ASIN", id));
+			cr.add(Restrictions.eq("asin", id));
 			
 			List result = cr.list();
 			Iterator it = result.iterator();
@@ -339,7 +348,7 @@ public class DBImpl implements MediaDbInterface {
 			trx = session.beginTransaction();
 			
 			Criteria cr = session.createCriteria(Music.class);
-			cr.add(Restrictions.eq("ASIN", id));
+			cr.add(Restrictions.eq("asin", id));
 			
 			List result = cr.list();
 			Iterator it = result.iterator();
@@ -364,7 +373,7 @@ public class DBImpl implements MediaDbInterface {
 			trx = session.beginTransaction();
 			
 			Criteria cr = session.createCriteria(Book.class);
-			cr.add(Restrictions.eq("ASIN", id));
+			cr.add(Restrictions.eq("asin", id));
 			
 			List result = cr.list();
 			Iterator it = result.iterator();
