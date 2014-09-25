@@ -16,6 +16,12 @@
 			
 		<property column="PicUrl" generated="never" lazy="false" name="picUrl" type="string" />
 		
+		<property column="Rating" name="avgRating" type="float" />
+		
+		<property column="verfuegbarkeit" name="available" type="boolean" />
+		
+		<property column="Zustand" name="stateNew" type="boolean" />
+		
 		<!-- <set cascade="all" fetch="select" lazy="true" name="categories"
 			sort="unsorted" table="V_teilVon">
 			<key column="ASIN" foreign-key="Parent" />
