@@ -16,16 +16,20 @@
 			
 		<property column="PicUrl" generated="never" lazy="false" name="picUrl" type="string" />
 		
-		<set cascade="all" fetch="select" lazy="true" name="categories"
+		<!-- <set cascade="all" fetch="select" lazy="true" name="categories"
 			sort="unsorted" table="V_teilVon">
 			<key column="ASIN" foreign-key="Parent" />
 			<one-to-many class="Category" />
+		</set> -->
+		<set name="categories" table="V_teilVon">
+		    <key column="ASIN" />
+		    <many-to-many column="namen" class="Category" />
 		</set>
 		
 		<set fetch="select" inverse="true" lazy="true" name="reviews"
 			sort="unsorted" table="V_Review">
 			<key>
-				<column name="ASIN" not-null="true" />
+				<column name="asin" not-null="true" />
 			</key>
 			<one-to-many class="Review" />
 		</set>
@@ -55,7 +59,7 @@
 
 
 			<set cascade="all" fetch="select" lazy="true" name="authors"
-				sort="unsorted" table="V_hatAutor">
+				sort="unsorted" table="V_Author">
 				<key column="ASIN" />
 				<many-to-many class="Person" column="Namen" unique="false" />
 			</set>
@@ -74,15 +78,15 @@
 			<property name="runningTime" type="java.lang.Integer">
 				<column name="LAUFZEIT" />
 			</property>
-			<set name="actors" cascade="save-update" table="V_TEAM" where="Team.Position = 'actors'">
+			<set name="actors" cascade="save-update" table="V_Actors" >
 				<key column="asin" />
 				<many-to-many column="Name" class="Person" />
 			</set>
-			<set name="creators" cascade="save-update" table="V_TEAM" where="Team.Position = 'creators'">
+			<set name="creators" cascade="save-update" table="V_Creator" >
 				<key column="asin" />
 				<many-to-many column="Name" class="Person" />
 			</set>
-			<set name="directors" cascade="save-update" table="V_TEAM" where="Team.Position = 'directors'">
+			<set name="directors" cascade="save-update" table="V_Director" >
 				<key column="asin" />
 				<many-to-many column="Name" class="Person" />
 			</set>

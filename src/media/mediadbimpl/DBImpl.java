@@ -82,16 +82,16 @@ public class DBImpl implements MediaDbInterface {
 			/*Criteria crit = session.createCriteria(Person.class).add(Restrictions.like("name", "Mario%"));
 			System.out.println(crit.list().size());*/
 			
-			Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("title", namePattern));
-			results.addAll(crit.list());
+			/*Criteria crit = session.createCriteria(Product.class).add(Restrictions.like("title", namePattern));
+			results.addAll(crit.list());*/
 			//System.out.println(crit.list().size());
 			
-			/*Query q = session.createQuery("from Product");
+			Query q = session.createQuery("from Product");
 			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while(it.hasNext()) {
-				System.out.println(((Product)it.next()).getTitle());
-			}*/
+				System.out.println(((Product)it.next()).getCategories());
+			}
 			
 			//trx.commit();
 			return results;
@@ -225,9 +225,27 @@ public class DBImpl implements MediaDbInterface {
 		return null;
 	}
 
+	/* klapt is aber langsam */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getProductsByCategoryPath(Category[] categoriesPath) {
-		// TODO Auto-generated method stub
+		Session session = null;
+		List<Product> resultList = new ArrayList<Product>();
+		
+		try {
+			session = sessionFactory.openSession();
+			for(int i=0; i<categoriesPath.length; i++) {
+				Query q1 = session.createSQLQuery("SELECT ASIN FROM V_TEILVON WHERE NAMEN = '" + categoriesPath[i] + "'");
+				
+				for(int j=0; j<q1.list().size(); j++) {
+					resultList.addAll((List<Product>)session.createQuery("from Product where asin='" + q1.list().get(j) + "'").list());
+				}
+			}
+			
+			return resultList;
+		} catch(HibernateException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
