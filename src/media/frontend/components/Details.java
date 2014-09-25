@@ -246,11 +246,11 @@ public class Details extends JComponent implements Component {
 				} catch (Exception e) {
 				}
 				try {
-					dumpm[2] = music.getLabels().iterator().next().getName();
+					dumpm[2] = String.valueOf(music.getLabels().iterator().next());
 				} catch (Exception e) {
 				}
 				try {
-					dumpm[3] = music.getArtists().iterator().next().getName();
+					dumpm[3] = String.valueOf(music.getArtists().iterator().next());
 				} catch (Exception e) {
 				}
 				data.add(dumpm);

@@ -86,19 +86,18 @@ public class DBImpl implements MediaDbInterface {
 			 * .like("name", "Mario%")); System.out.println(crit.list().size());
 			 */
 
-			/*
-			 * Criteria crit =
-			 * session.createCriteria(Product.class).add(Restrictions
-			 * .like("title", namePattern)); results.addAll(crit.list());
-			 */
+			
+			Criteria crit =	session.createCriteria(Product.class)
+					.add(Restrictions.like("title", namePattern)); results.addAll(crit.list());
+			
 			// System.out.println(crit.list().size());
 
-			Query q = session.createQuery("from Product");
+			/*Query q = session.createQuery("from Book");
 			System.out.println(q.list().size());
 			Iterator it = q.list().iterator();
 			while (it.hasNext()) {
-				System.out.println(((Product) it.next()).getReviews());
-			}
+				System.out.println(((Book) it.next()).getPublishers().iterator().next());
+			}*/
 
 			// trx.commit();
 			return results;
@@ -291,13 +290,12 @@ public class DBImpl implements MediaDbInterface {
 		List<Product> productList = new ArrayList<Product>();
 
 		try {
-			System.out.println("func call");
 			session = sessionFactory.openSession();
 			trx = session.beginTransaction();
 			
 			List list =	session.createQuery("from Product").list(); 
 			Iterator it = list.iterator(); 
-			System.out.println(list.size());
+			//System.out.println(list.size());
 			while(it.hasNext()) { 
 				Product p = (Product)it.next();
 				if(!p.getReviews().isEmpty()) productList.add(p); 
@@ -388,8 +386,10 @@ public class DBImpl implements MediaDbInterface {
 
 			List result = cr.list();
 			Iterator it = result.iterator();
-			if (it.hasNext())
-				return (DVD) it.next();
+			if (it.hasNext()) {
+				DVD dvd = (DVD)it.next();
+				return dvd;
+			}
 		} catch (HibernateException e) {
 			if (trx != null) {
 				try {
@@ -421,8 +421,11 @@ public class DBImpl implements MediaDbInterface {
 
 			List result = cr.list();
 			Iterator it = result.iterator();
-			if (it.hasNext())
-				return (Music) it.next();
+			if (it.hasNext()) {
+				//System.out.println(((Music)it.next()).getArtists().iterator().next());
+				Music music = (Music) it.next();
+				return music;
+			}
 		} catch (HibernateException e) {
 			if (trx != null) {
 				try {
@@ -454,6 +457,7 @@ public class DBImpl implements MediaDbInterface {
 
 			List result = cr.list();
 			Iterator it = result.iterator();
+			//System.out.println(((Book)it.next()).getAuthors().iterator().next().getName());
 			if (it.hasNext())
 				return (Book) it.next();
 		} catch (HibernateException e) {
